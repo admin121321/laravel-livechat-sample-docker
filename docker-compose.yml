@@ -1,0 +1,60 @@
+version: '2.24.7'
+
+networks:
+  laraveldocker:
+    driver: bridge
+
+volumes:
+  lbdata:
+    driver: local
+
+services:
+  php:
+    build: .
+    image: livechat-app
+    container_name: livechat-app
+    restart: unless-stopped
+    tty: true
+    env_file:
+      - .env
+    ports:
+      - "1011:80"
+    environment:
+      working_dir: /var/www/
+    volumes:
+      - .:/var/www/
+      - ./nginx/php.ini:/usr/local/atc/php/conf.d/local.ini
+      - ./nginx/conf.d/app.conf:/etc/nginx/nginx.conf
+    networks:
+      - laraveldocker
+      
+  db:
+    image: mysql:8.0
+    container_name: livechat-db
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "4306:3306"
+    volumes:
+      - lbdata:/var/lib/mysqL
+    environment:
+      MYSQL_DATABASE: db_livechat
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user123!!
+      MYSQL_ROOT_PASSWORD: password
+      SERVICE_NAME: mysql
+      SERVICE_TAGS: dev
+    networks:
+      - laraveldocker
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: livechat-phpmyadmin
+    restart: always
+    links:
+      - db
+    ports:
+      - "7000:80"
+    networks:
+      - laraveldocker
+

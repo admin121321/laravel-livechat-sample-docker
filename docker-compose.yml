@@ -2,7 +2,14 @@ version: '2.24.7'
 
 networks:
   laraveldocker:
-    driver: bridge
+    driver: ipvlan
+    driver_opts:
+      parent: ens33
+    ipam:
+      config:
+        - subnet: 192.168.1.0/24
+          gateway: 192.168.1.1
+
 
 volumes:
   lbdata:
@@ -18,7 +25,7 @@ services:
     env_file:
       - .env
     ports:
-      - "1011:80"
+      - "80:80"
     environment:
       working_dir: /var/www/
     volumes:
@@ -26,7 +33,9 @@ services:
       - ./nginx/php.ini:/usr/local/atc/php/conf.d/local.ini
       - ./nginx/conf.d/app.conf:/etc/nginx/nginx.conf
     networks:
-      - laraveldocker
+      laraveldocker:
+        ipv4_address: 192.168.1.10
+
       
   db:
     image: mysql:8.0
@@ -34,7 +43,7 @@ services:
     restart: unless-stopped
     tty: true
     ports:
-      - "4306:3306"
+      - "3306:3306"
     volumes:
       - lbdata:/var/lib/mysqL
     environment:
@@ -45,7 +54,8 @@ services:
       SERVICE_NAME: mysql
       SERVICE_TAGS: dev
     networks:
-      - laraveldocker
+      laraveldocker:
+        ipv4_address: 192.168.1.11
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -56,5 +66,6 @@ services:
     ports:
       - "7000:80"
     networks:
-      - laraveldocker
+      laraveldocker:
+        ipv4_address: 192.168.1.12
 

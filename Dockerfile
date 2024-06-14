@@ -44,6 +44,12 @@ COPY ./nginx/php.ini /usr/local/etc/php/local.ini
 
 COPY ./nginx/conf.d/app.conf /etc/nginx/nginx.conf
 
+RUN chown -R www-data:www-data /var/www
+
+#RUN chown -R www-data.www-data /var/www/live-chat-docker/storage
+
+#RUN chown -R www-data.www-data /var/www/live-chat-docker/bootstrap/cache
+
 RUN chmod +rwx /var/www
 
 RUN chmod -R 777 /var/www

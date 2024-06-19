@@ -7,8 +7,8 @@ networks:
       parent: ens33
     ipam:
       config:
-        - subnet: 192.168.1.0/24
-          gateway: 192.168.1.1
+        - subnet: 10.40.120.0/24
+          gateway: 10.40.120.243
 
 
 volumes:
@@ -27,14 +27,14 @@ services:
     ports:
       - "80:80"
     environment:
-      working_dir: /var/www/
+      working_dir: /var/www/laravel-livechat-sample-docker
     volumes:
-      - .:/var/www/
+      - .:/var/www/laravel-livechat-sample-docker
       - ./nginx/php.ini:/usr/local/atc/php/conf.d/local.ini
       - ./nginx/conf.d/app.conf:/etc/nginx/nginx.conf
     networks:
       laraveldocker:
-        ipv4_address: 192.168.1.10
+        ipv4_address: 10.40.120.245
 
       
   db:
@@ -55,17 +55,17 @@ services:
       SERVICE_TAGS: dev
     networks:
       laraveldocker:
-        ipv4_address: 192.168.1.11
+        ipv4_address: 10.40.120.246
 
   phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    container_name: livechat-phpmyadmin
-    restart: always
-    links:
-      - db
-    ports:
-      - "7000:80"
-    networks:
-      laraveldocker:
-        ipv4_address: 192.168.1.12
+     image: phpmyadmin/phpmyadmin
+     container_name: livechat-phpmyadmin
+     restart: always
+     links:
+       - db
+     ports:
+       - "7000:80"
+     networks:
+       laraveldocker:
+         ipv4_address: 10.40.120.247
 

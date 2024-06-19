@@ -38,21 +38,21 @@ RUN apt-get update \
     && rm -rf /tmp/pear/
 
 # Copy files
-COPY . /var/www
+COPY . /var/www/
 
 COPY ./nginx/php.ini /usr/local/etc/php/local.ini
 
 COPY ./nginx/conf.d/app.conf /etc/nginx/nginx.conf
 
-RUN chown -R www-data:www-data /var/www
+RUN chown -R www-data:www-data /var/www/
 
-#RUN chown -R www-data.www-data /var/www/live-chat-docker/storage
+RUN chown -R www-data:www-data /var/www/storage
 
-#RUN chown -R www-data.www-data /var/www/live-chat-docker/bootstrap/cache
+RUN chown -R www-data:www-data /var/www/bootstrap/cache
 
-RUN chmod +rwx /var/www
+RUN chmod +rwx /var/www/
 
-RUN chmod -R 777 /var/www
+RUN chmod -R 777 /var/www/
 
 # setup FE
 RUN npm install
@@ -65,8 +65,10 @@ RUN npm run build
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 RUN composer install --working-dir="/var/www"
+#RUN composer install
 
 RUN composer dump-autoload --working-dir="/var/www"
+#RUN composer update
 
 RUN php artisan optimize
 
@@ -89,5 +91,5 @@ EXPOSE 9000
 
 RUN ["chmod", "+x", "post_deploy.sh"]
 
-CMD [ "sh", "./post_deploy.sh" ]
+CMD [ "sh", "post_deploy.sh" ]
 # CMD php artisan serve --host=127.0.0.1 --port=9000

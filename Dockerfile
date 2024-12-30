@@ -44,7 +44,18 @@ COPY ./nginx/php.ini /usr/local/etc/php/local.ini
 
 COPY ./nginx/conf.d/app.conf /etc/nginx/nginx.conf
 
-RUN chown -R www-data:www-data /var/www/
+# Install Composer
+COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
+
+RUN composer clear-cache
+
+RUN composer install --no-dev --optimize-autoloader
+
+RUN chown -R www-data:www-data /var/www/html/storage \
+    && chown -R www-data:www-data /var/www/html/bootstrap/cache \
+    && chown -R www-data:www-data /var/www/html/vendor
+    
+# RUN chown -R www-data:www-data /var/www/
 
 # RUN chown -R www-data:www-data /var/www/storage
 
@@ -62,9 +73,9 @@ RUN npm rebuild node-sass
 RUN npm run build
 
 # setup composer and laravel
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+#RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-RUN composer install --no-dev --optimize-autoloader
+#RUN composer install --no-dev --optimize-autoloader
 
 #RUN composer install --working-dir="/var/www"
 #RUN composer install

@@ -60,6 +60,8 @@ RUN chmod +rwx /var/www/
 RUN chmod -R 777 /var/www/
 
 # setup FE
+RUN npm cache clean --force
+
 RUN npm install
 
 RUN npm rebuild node-sass

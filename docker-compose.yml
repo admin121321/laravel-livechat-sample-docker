@@ -3,7 +3,7 @@ version: '2.24.7'
 networks:
   laraveldocker:
     driver: bridge
-    # perubahan ke dua di jenkins
+    # perubahan ke tiga di jenkins
     # driver: ipvlan
     # driver_opts:
       # parent: ens33

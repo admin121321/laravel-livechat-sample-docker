@@ -44,10 +44,10 @@ COPY ./nginx/php.ini /usr/local/etc/php/local.ini
 
 COPY ./nginx/conf.d/app.conf /etc/nginx/nginx.conf
 
-RUN chown -R www-data:www-data /var/www/ \ 
-    && chown -R www-data:www-data /var/www/html/storage \
-    && chown -R www-data:www-data /var/www/html/bootstrap/cache \
-    && chown -R www-data:www-data /var/www/html/vendor
+RUN chown -R www-data:www-data /var/www/
+    # && chown -R www-data:www-data /var/www/html/storage \
+    # && chown -R www-data:www-data /var/www/html/bootstrap/cache \
+    # && chown -R www-data:www-data /var/www/html/vendor
     
 # RUN chown -R www-data:www-data /var/www/
 

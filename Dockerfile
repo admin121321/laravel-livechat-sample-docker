@@ -44,9 +44,8 @@ COPY ./nginx/php.ini /usr/local/etc/php/local.ini
 
 COPY ./nginx/conf.d/app.conf /etc/nginx/nginx.conf
 
-RUN chown -R www-data:www-data /var/www/
-
-RUN chown -R www-data:www-data /var/www/storage \
+RUN chown -R www-data:www-data /var/www/ \
+    && chown -R www-data:www-data /var/www/storage \
     && chown -R www-data:www-data /var/www/bootstrap/cache \
     && chown -R www-data:www-data /var/www/vendor
 

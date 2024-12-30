@@ -47,6 +47,8 @@ COPY ./nginx/conf.d/app.conf /etc/nginx/nginx.conf
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
+RUN composer self-update
+
 RUN composer clear-cache
 
 RUN composer install --no-dev --optimize-autoloader

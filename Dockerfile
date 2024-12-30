@@ -46,9 +46,9 @@ COPY ./nginx/conf.d/app.conf /etc/nginx/nginx.conf
 
 RUN chown -R www-data:www-data /var/www/
 
-RUN chown -R www-data:www-data /var/www/storage
+# RUN chown -R www-data:www-data /var/www/storage
 
-RUN chown -R www-data:www-data /var/www/bootstrap/cache
+# RUN chown -R www-data:www-data /var/www/bootstrap/cache
 
 RUN chmod +rwx /var/www/
 

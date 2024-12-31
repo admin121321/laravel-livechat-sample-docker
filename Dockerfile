@@ -61,9 +61,8 @@ RUN chmod -R 777 /var/www/
 
 # setup FE
 #RUN npm cache clean --force
-RUN npm config set cache /path/to/cache --global
 
-RUN npm install
+RUN npm install --cache /path/to/cache
 
 RUN npm rebuild node-sass
 
@@ -72,7 +71,7 @@ RUN npm run build
 # setup composer and laravel
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-RUN composer install --working-dir="/var/www"
+RUN composer install --working-dir="/var/www" --prefer-dist --no-interaction
 #RUN composer install
 
 RUN composer dump-autoload --working-dir="/var/www"

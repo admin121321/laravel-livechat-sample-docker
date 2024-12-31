@@ -2,7 +2,7 @@
 FROM php:8.2-fpm
 
 # setup user as root
-USER admin_user
+USER root
 
 WORKDIR /var/www
 

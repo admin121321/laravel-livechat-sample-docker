@@ -89,7 +89,7 @@ RUN composer clear-cache
 
 #RUN php artisan view:cache
 
-RUN php artisan optimize
+#RUN php artisan optimize
 # remove this line if you do not want to run migrations on each build
 #RUN php artisan migrate --force
 

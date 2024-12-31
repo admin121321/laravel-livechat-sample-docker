@@ -71,7 +71,7 @@ RUN composer install --no-interaction --no-scripts --no-progress --no-dev --opti
 
 #RUN composer dump-autoload --working-dir="/var/www"
 
-RUN composer update
+#RUN composer update
 
 RUN composer self-update
 

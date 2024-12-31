@@ -67,7 +67,7 @@ RUN npm run build
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 #RUN composer install --working-dir="/var/www"
-RUN composer install --no-interaction --no-scripts --no-progress --no-dev --optimize-autoloader --allow-root
+RUN composer install --no-interaction --no-scripts --no-progress --no-dev --optimize-autoloader
 
 #RUN composer dump-autoload --working-dir="/var/www"
 

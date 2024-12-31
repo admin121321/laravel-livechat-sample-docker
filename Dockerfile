@@ -66,8 +66,8 @@ RUN npm run build
 # setup composer and laravel
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-RUN composer install --working-dir="/var/www"
-#RUN composer install
+#RUN composer install --working-dir="/var/www"
+RUN composer install
 
 #RUN composer dump-autoload --working-dir="/var/www"
 

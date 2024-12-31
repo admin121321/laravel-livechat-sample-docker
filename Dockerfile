@@ -77,17 +77,17 @@ RUN composer self-update
 
 RUN composer clear-cache
 
-RUN php artisan route:clear
+#RUN php artisan route:clear
 
-RUN php artisan route:cache
+#RUN php artisan route:cache
 
-RUN php artisan config:clear
+#RUN php artisan config:clear
 
-RUN php artisan config:cache
+#RUN php artisan config:cache
 
-RUN php artisan view:clear
+#RUN php artisan view:clear
 
-RUN php artisan view:cache
+#RUN php artisan view:cache
 
 RUN php artisan optimize
 # remove this line if you do not want to run migrations on each build

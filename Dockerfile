@@ -2,7 +2,7 @@
 FROM php:8.2-fpm
 
 # setup user as root
-USER root
+USER admin_user
 
 WORKDIR /var/www
 
@@ -67,7 +67,7 @@ RUN npm run build
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 #RUN composer install --working-dir="/var/www"
-RUN composer install
+RUN composer install --no-interaction --no-scripts --no-progress --no-dev --optimize-autoloader --allow-root
 
 #RUN composer dump-autoload --working-dir="/var/www"
 

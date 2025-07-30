@@ -1,14 +1,10 @@
-# 2022 update
+# Install PHP
 FROM php:8.2-fpm
 
 # setup user as root
 USER root
 
 WORKDIR /var/www
-
-# setup node js source will be used later to install node js
-RUN curl -sL https://deb.nodesource.com/setup_21.x -o nodesource_setup.sh
-RUN ["sh",  "./nodesource_setup.sh"]
 
 # Install environment dependencies
 # PS. you can deploy an image that stops at this step so that your cI/CD builds are a bit faster (if not cached) this is what takes the most time in the deployment process.
@@ -54,12 +50,28 @@ RUN chmod +rwx /var/www
 
 RUN chmod -R 777 /var/www
 
-# setup FE
+#Install Node JS
+FROM node:22.3-alpine3.19
+
+RUN mkdir -p /var/www/laravel-livechat-sample-docker/node_modules && chown -R www-data:www-data /var/www/laravel-livechat-sample-docker
+
+WORKDIR /var/www/laravel-livechat-sample-docker
+
+COPY package*.json ./
+
+# setup node js source will be used later to install node js
+# RUN curl -sL https://deb.nodesource.com/setup_21.x -o nodesource_setup.sh
+# RUN ["sh",  "./nodesource_setup.sh"]
+
+# setup Node JS
 RUN npm install
 
 RUN npm rebuild node-sass
 
 RUN npm run build
+
+COPY --chown=www-data:www-data . .
+
 
 # setup composer and laravel
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer

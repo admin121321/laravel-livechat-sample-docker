@@ -7,8 +7,8 @@ networks:
       parent: ens33
     ipam:
       config:
-        - subnet: 192.168.1.0/24
-          gateway: 192.168.1.1
+        - subnet: 192.168.6.0/24
+          gateway: 192.168.6.84
 
 
 volumes:
@@ -34,7 +34,7 @@ services:
       - ./nginx/conf.d/app.conf:/etc/nginx/nginx.conf
     networks:
       laraveldocker:
-        ipv4_address: 192.168.1.10
+        ipv4_address: 192.168.6.212
 
       
   db:
@@ -55,7 +55,7 @@ services:
       SERVICE_TAGS: dev
     networks:
       laraveldocker:
-        ipv4_address: 192.168.1.11
+        ipv4_address: 192.168.6.213
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -67,5 +67,5 @@ services:
       - "7000:80"
     networks:
       laraveldocker:
-        ipv4_address: 192.168.1.12
+        ipv4_address: 192.168.6.214
 

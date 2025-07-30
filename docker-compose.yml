@@ -2,6 +2,7 @@ version: '2.24.7'
 
 networks:
   laraveldocker:
+<<<<<<< HEAD
     driver: ipvlan
     driver_opts:
       parent: ens33
@@ -9,6 +10,17 @@ networks:
       config:
         - subnet: 192.168.6.0/24
           gateway: 192.168.6.84
+=======
+    driver: bridge
+    # perubahan ke tiga di jenkins
+    # driver: ipvlan
+    # driver_opts:
+      # parent: ens33
+    # ipam:
+      # config:
+        # - subnet: 192.168.1.0/24
+          # gateway: 192.168.1.1
+>>>>>>> 327cc99aa63bb0d9f5b40764a764f7e6fe58136f
 
 
 volumes:
@@ -27,14 +39,20 @@ services:
     ports:
       - "80:80"
     environment:
-      working_dir: /var/www/
+      working_dir: /var/www/laravel-livechat-sample-docker
     volumes:
-      - .:/var/www/
+      - .:/var/www/laravel-livechat-sample-docker
       - ./nginx/php.ini:/usr/local/atc/php/conf.d/local.ini
       - ./nginx/conf.d/app.conf:/etc/nginx/nginx.conf
     networks:
+<<<<<<< HEAD
       laraveldocker:
         ipv4_address: 192.168.6.212
+=======
+      - laraveldocker
+      # laraveldocker:
+        # ipv4_address: 192.168.1.3
+>>>>>>> 327cc99aa63bb0d9f5b40764a764f7e6fe58136f
 
       
   db:
@@ -54,6 +72,7 @@ services:
       SERVICE_NAME: mysql
       SERVICE_TAGS: dev
     networks:
+<<<<<<< HEAD
       laraveldocker:
         ipv4_address: 192.168.6.213
 
@@ -68,4 +87,22 @@ services:
     networks:
       laraveldocker:
         ipv4_address: 192.168.6.214
+=======
+      - laraveldocker
+      # laraveldocker:
+        # ipv4_address: 192.168.1.4
+
+  phpmyadmin:
+     image: phpmyadmin/phpmyadmin
+     container_name: livechat-phpmyadmin
+     restart: always
+     links:
+       - db
+     ports:
+       - "7000:80"
+     networks:
+       - laraveldocker
+       # laraveldocker:
+         # ipv4_address: 192.168.1.5
+>>>>>>> 327cc99aa63bb0d9f5b40764a764f7e6fe58136f
 

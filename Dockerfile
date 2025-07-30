@@ -34,22 +34,23 @@ RUN apt-get update \
     && rm -rf /tmp/pear/
 
 # Copy files
-COPY . /var/www
+COPY . /var/www/
 
 COPY ./nginx/php.ini /usr/local/etc/php/local.ini
 
 COPY ./nginx/conf.d/app.conf /etc/nginx/nginx.conf
+    
+RUN chown -R www-data:www-data /var/www/
 
-RUN chown -R www-data:www-data /var/www
+#RUN chown -R www-data:www-data /var/www/storage
 
-#RUN chown -R www-data.www-data /var/www/live-chat-docker/storage
+#RUN chown -R www-data:www-data /var/www/bootstrap/cache
 
-#RUN chown -R www-data.www-data /var/www/live-chat-docker/bootstrap/cache
+RUN chmod +rwx /var/www/
 
-RUN chmod +rwx /var/www
+RUN chmod -R 777 /var/www/
 
-RUN chmod -R 777 /var/www
-
+<<<<<<< HEAD
 #Install Node JS
 FROM node:22.3-alpine3.19
 
@@ -65,6 +66,12 @@ COPY package*.json ./
 
 # setup Node JS
 RUN npm install
+=======
+# setup FE
+#RUN npm cache clean --force
+
+RUN npm install --cache /path/to/cache
+>>>>>>> 327cc99aa63bb0d9f5b40764a764f7e6fe58136f
 
 RUN npm rebuild node-sass
 
@@ -76,24 +83,30 @@ COPY --chown=www-data:www-data . .
 # setup composer and laravel
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-RUN composer install --working-dir="/var/www"
+#RUN composer install --working-dir="/var/www"
+RUN composer install --no-interaction --no-scripts --no-progress --no-dev --optimize-autoloader
 
-RUN composer dump-autoload --working-dir="/var/www"
+#RUN composer dump-autoload --working-dir="/var/www"
 
-RUN php artisan optimize
+#RUN composer update
 
-RUN php artisan route:clear
+RUN composer self-update
 
-RUN php artisan route:cache
+RUN composer clear-cache
 
-RUN php artisan config:clear
+#RUN php artisan route:clear
 
-RUN php artisan config:cache
+#RUN php artisan route:cache
 
-RUN php artisan view:clear
+#RUN php artisan config:clear
 
-RUN php artisan view:cache
+#RUN php artisan config:cache
 
+#RUN php artisan view:clear
+
+#RUN php artisan view:cache
+
+#RUN php artisan optimize
 # remove this line if you do not want to run migrations on each build
 #RUN php artisan migrate --force
 
@@ -101,5 +114,5 @@ EXPOSE 9000
 
 RUN ["chmod", "+x", "post_deploy.sh"]
 
-CMD [ "sh", "./post_deploy.sh" ]
+CMD [ "sh", "post_deploy.sh" ]
 # CMD php artisan serve --host=127.0.0.1 --port=9000

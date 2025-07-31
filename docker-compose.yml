@@ -87,22 +87,4 @@ services:
     networks:
       laraveldocker:
         ipv4_address: 192.168.6.214
-=======
-      - laraveldocker
-      # laraveldocker:
-        # ipv4_address: 192.168.1.4
-
-  phpmyadmin:
-     image: phpmyadmin/phpmyadmin
-     container_name: livechat-phpmyadmin
-     restart: always
-     links:
-       - db
-     ports:
-       - "7000:80"
-     networks:
-       - laraveldocker
-       # laraveldocker:
-         # ipv4_address: 192.168.1.5
->>>>>>> 327cc99aa63bb0d9f5b40764a764f7e6fe58136f
 

@@ -66,12 +66,6 @@ COPY package*.json ./
 
 # setup Node JS
 RUN npm install
-=======
-# setup FE
-#RUN npm cache clean --force
-
-RUN npm install --cache /path/to/cache
->>>>>>> 327cc99aa63bb0d9f5b40764a764f7e6fe58136f
 
 RUN npm rebuild node-sass
 
